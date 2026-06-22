@@ -1,0 +1,84 @@
+# ============================================================
+# CKD-FedXAI — central configuration
+# All tunable parameters live here (Chapter 3 spec).
+# Scripts read this file; nothing is hard-coded in code.
+# ============================================================
+
+seed: 42                      # global random seed (reproducibility, §3.9.4)
+
+paths:
+  raw_data: "data/raw/kidney_disease.csv"
+  processed_data: "data/processed/ckd_processed.csv"
+  partitions_dir: "data/partitions"
+  results_dir: "results"
+  figures_dir: "results/figures"
+  metrics_dir: "results/metrics"
+  models_dir: "results/models"
+
+data:
+  id_column: "id"             # dropped in preprocessing (§3.3.2)
+  target_column: "classification"
+  positive_class: "ckd"       # mapped to 1
+  negative_class: "notckd"    # mapped to 0
+  test_size: 0.2              # train/test split
+  # The 24 features per the UCI spec (§3.2). Column names as they
+  # appear in the mansoordaku/ckdisease CSV. ADJUST if your file differs.
+  numeric_features:
+    ["age", "bp", "bgr", "bu", "sc", "sod", "pot", "hemo", "pcv", "wc", "rc"]
+  nominal_features:
+    ["sg", "al", "su", "rbc", "pc", "pcc", "ba", "htn", "dm", "cad", "appet", "pe", "ane"]
+
+preprocess:
+  numeric_imputation: "median"     # "median" or "knn" (§3.3.3)
+  knn_neighbors: 5                 # used only if numeric_imputation == "knn"
+  categorical_imputation: "most_frequent"
+  scaling: "standard"              # "standard" (z-score) or "minmax" (§3.3.5)
+
+feature_selection:
+  enable: true
+  correlation_threshold: 0.95      # drop one of any pair above this (§3.3.6)
+  use_permutation_importance: true
+  top_k: null                      # null = keep all ranked; or an integer
+
+models:
+  random_forest:
+    n_estimators: 200
+    max_depth: null
+    random_state: 42
+  xgboost:
+    n_estimators: 200
+    learning_rate: 0.1
+    max_depth: 4
+    random_state: 42
+  logistic_regression:             # secondary track (HE-compatible, §3.5.2)
+    max_iter: 1000
+    random_state: 42
+
+federated:
+  num_clients: 5                   # simulated hospitals (§3.4.1)
+  num_rounds: 20                   # communication rounds (§3.4.3)
+  local_epochs: 1
+  partition_scheme: "iid"          # "iid" or "non_iid" (§3.4.2)
+  dirichlet_alpha: 0.5             # lower = more heterogeneous (non-IID)
+
+privacy:
+  differential_privacy:            # ensemble track (§3.7.1)
+    enable: false
+    epsilons: [10.0, 5.0, 1.0, 0.5]   # privacy budgets to sweep
+    delta: 1.0e-5
+    mechanism: "gaussian"          # "gaussian" or "laplace"
+  homomorphic_encryption:          # weight-based track (§3.7.2)
+    enable: false
+    scheme: "CKKS"
+    poly_modulus_degree: 8192
+    coeff_mod_bit_sizes: [60, 40, 40, 60]
+    global_scale_bits: 40
+
+explainability:
+  shap: true
+  lime: true
+  num_lime_samples: 5              # number of patient-level LIME reports
+
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "specificity", "f1", "auc_roc"]
+  cv_folds: 5
