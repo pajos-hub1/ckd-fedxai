@@ -1,0 +1,38 @@
+{
+  "random_forest": {
+    "cv_accuracy_mean": 0.990625,
+    "cv_accuracy_std": 0.012499999999999999,
+    "test_metrics": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "specificity": 1.0,
+      "auc_roc": 1.0
+    }
+  },
+  "xgboost": {
+    "cv_accuracy_mean": 0.984375,
+    "cv_accuracy_std": 0.01711632992203644,
+    "test_metrics": {
+      "accuracy": 0.9875,
+      "precision": 1.0,
+      "recall": 0.98,
+      "f1": 0.98989898989899,
+      "specificity": 1.0,
+      "auc_roc": 1.0
+    }
+  },
+  "logistic_regression": {
+    "cv_accuracy_mean": 0.990625,
+    "cv_accuracy_std": 0.012499999999999999,
+    "test_metrics": {
+      "accuracy": 0.9875,
+      "precision": 1.0,
+      "recall": 0.98,
+      "f1": 0.98989898989899,
+      "specificity": 1.0,
+      "auc_roc": 1.0
+    }
+  }
+}
