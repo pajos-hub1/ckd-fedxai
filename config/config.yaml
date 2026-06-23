@@ -1,10 +1,9 @@
 # ============================================================
 # CKD-FedXAI — central configuration
 # All tunable parameters live here (Chapter 3 spec).
-# Scripts read this file; nothing is hard-coded in code.
 # ============================================================
 
-seed: 42                      # global random seed (reproducibility, §3.9.4)
+seed: 42
 
 paths:
   raw_data: "data/raw/kidney_disease.csv"
@@ -16,29 +15,27 @@ paths:
   models_dir: "results/models"
 
 data:
-  id_column: "id"             # dropped in preprocessing (§3.3.2)
+  id_column: "id"
   target_column: "classification"
-  positive_class: "ckd"       # mapped to 1
-  negative_class: "notckd"    # mapped to 0
-  test_size: 0.2              # train/test split
-  # The 24 features per the UCI spec (§3.2). Column names as they
-  # appear in the mansoordaku/ckdisease CSV. ADJUST if your file differs.
+  positive_class: "ckd"
+  negative_class: "notckd"
+  test_size: 0.2
   numeric_features:
-    ["age", "bp", "bgr", "bu", "sc", "sod", "pot", "hemo", "pcv", "wc", "rc"]
+    ["age", "bp", "sg", "al", "su", "bgr", "bu", "sc", "sod", "pot", "hemo", "pcv", "wc", "rc"]
   nominal_features:
-    ["sg", "al", "su", "rbc", "pc", "pcc", "ba", "htn", "dm", "cad", "appet", "pe", "ane"]
+    ["rbc", "pc", "pcc", "ba", "htn", "dm", "cad", "appet", "pe", "ane"]
 
 preprocess:
-  numeric_imputation: "median"     # "median" or "knn" (§3.3.3)
-  knn_neighbors: 5                 # used only if numeric_imputation == "knn"
+  numeric_imputation: "median"
+  knn_neighbors: 5
   categorical_imputation: "most_frequent"
-  scaling: "standard"              # "standard" (z-score) or "minmax" (§3.3.5)
+  scaling: "standard"
 
 feature_selection:
   enable: true
-  correlation_threshold: 0.95      # drop one of any pair above this (§3.3.6)
+  correlation_threshold: 0.95
   use_permutation_importance: true
-  top_k: null                      # null = keep all ranked; or an integer
+  top_k: null
 
 models:
   random_forest:
@@ -50,24 +47,24 @@ models:
     learning_rate: 0.1
     max_depth: 4
     random_state: 42
-  logistic_regression:             # secondary track (HE-compatible, §3.5.2)
+  logistic_regression:
     max_iter: 1000
     random_state: 42
 
 federated:
-  num_clients: 5                   # simulated hospitals (§3.4.1)
-  num_rounds: 20                   # communication rounds (§3.4.3)
+  num_clients: 5
+  num_rounds: 20
   local_epochs: 1
-  partition_scheme: "iid"          # "iid" or "non_iid" (§3.4.2)
-  dirichlet_alpha: 0.5             # lower = more heterogeneous (non-IID)
+  partition_scheme: "iid"
+  dirichlet_alpha: 0.5
 
 privacy:
-  differential_privacy:            # ensemble track (§3.7.1)
+  differential_privacy:
     enable: false
-    epsilons: [10.0, 5.0, 1.0, 0.5]   # privacy budgets to sweep
+    epsilons: [10.0, 5.0, 1.0, 0.5]
     delta: 1.0e-5
-    mechanism: "gaussian"          # "gaussian" or "laplace"
-  homomorphic_encryption:          # weight-based track (§3.7.2)
+    mechanism: "gaussian"
+  homomorphic_encryption:
     enable: false
     scheme: "CKKS"
     poly_modulus_degree: 8192
@@ -77,7 +74,7 @@ privacy:
 explainability:
   shap: true
   lime: true
-  num_lime_samples: 5              # number of patient-level LIME reports
+  num_lime_samples: 5
 
 evaluation:
   metrics: ["accuracy", "precision", "recall", "specificity", "f1", "auc_roc"]
