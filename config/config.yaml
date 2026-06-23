@@ -74,7 +74,9 @@ privacy:
 explainability:
   shap: true
   lime: true
-  num_lime_samples: 5
+  num_lime_samples: 5              # number of patient-level LIME reports
+  models_to_explain: ["xgboost"]   # add "random_forest", "logistic_regression" later
+  shap_max_display: 14             # features to show in summary plot
 
 evaluation:
   metrics: ["accuracy", "precision", "recall", "specificity", "f1", "auc_roc"]
