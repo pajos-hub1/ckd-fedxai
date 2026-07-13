@@ -56,7 +56,7 @@ federated:
   num_rounds: 20
   local_epochs: 1
   partition_scheme: "iid"
-  dirichlet_alpha: 0.5
+  dirichlet_alpha: 1.0             # was 0.5 — raised to ensure both classes per client
 
 privacy:
   differential_privacy:
