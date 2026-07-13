@@ -1,0 +1,70 @@
+{
+  "random_forest": {
+    "centralised": {
+      "accuracy_mean": 0.9962500000000001,
+      "accuracy_std": 0.005728219618694779,
+      "recall_mean": 1.0,
+      "recall_std": 0.0,
+      "auc_mean": 0.9998666666666665,
+      "auc_std": 0.0002666666666666595
+    },
+    "iid": {
+      "accuracy_mean": 0.9862499999999998,
+      "accuracy_std": 0.008750000000000011,
+      "recall_mean": 0.99,
+      "recall_std": 0.010000000000000009,
+      "auc_mean": 0.9993333333333334,
+      "auc_std": 0.0010327955589886527
+    },
+    "non_iid_equal": {
+      "accuracy_mean": 0.9924999999999999,
+      "accuracy_std": 0.008291561975888493,
+      "recall_mean": 0.9960000000000001,
+      "recall_std": 0.008000000000000007,
+      "auc_mean": 0.9996666666666666,
+      "auc_std": 0.000537483849886559
+    },
+    "non_iid": {
+      "accuracy_mean": 0.9925,
+      "accuracy_std": 0.010000000000000004,
+      "recall_mean": 0.998,
+      "recall_std": 0.0060000000000000045,
+      "auc_mean": 0.9994,
+      "auc_std": 0.0009637888196534033
+    }
+  },
+  "xgboost": {
+    "centralised": {
+      "accuracy_mean": 0.9925,
+      "accuracy_std": 0.008291561975888493,
+      "recall_mean": 0.994,
+      "recall_std": 0.009165151389911688,
+      "auc_mean": 0.9996,
+      "auc_std": 0.000679869268479035
+    },
+    "iid": {
+      "accuracy_mean": 0.96125,
+      "accuracy_std": 0.02465385365414503,
+      "recall_mean": 0.9620000000000001,
+      "recall_std": 0.031559467676118995,
+      "auc_mean": 0.9963333333333333,
+      "auc_std": 0.003014778414558663
+    },
+    "non_iid_equal": {
+      "accuracy_mean": 0.9662500000000002,
+      "accuracy_std": 0.020953818267800267,
+      "recall_mean": 0.9720000000000001,
+      "recall_std": 0.027129319932501055,
+      "auc_mean": 0.9963333333333333,
+      "auc_std": 0.0026541372316525643
+    },
+    "non_iid": {
+      "accuracy_mean": 0.9762500000000001,
+      "accuracy_std": 0.014197270864500707,
+      "recall_mean": 0.9880000000000001,
+      "recall_std": 0.013266499161421611,
+      "auc_mean": 0.9981333333333333,
+      "auc_std": 0.0017333333333333372
+    }
+  }
+}

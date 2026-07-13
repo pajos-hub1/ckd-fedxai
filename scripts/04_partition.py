@@ -3,9 +3,9 @@
 Run from the project root:
     python scripts/04_partition.py
 
-Produces BOTH iid/ and non_iid/ partitions so the federated experiments
-can compare them. The global held-out test set is saved separately and
-is identical to the one used by the centralised baseline.
+Produces three partition schemes so the federated experiments can compare
+them. The global held-out test set is saved separately and is identical to
+the one used by the centralised baseline.
 """
 from __future__ import annotations
 
@@ -44,13 +44,12 @@ def main() -> None:
     out_root = ROOT / config["paths"]["partitions_dir"]
     out_root.mkdir(parents=True, exist_ok=True)
 
-    # save the global test set once
     test_path = out_root / "test.csv"
     test_df.to_csv(test_path, index=False)
     print(f"✓ Saved global test set: {test_path.name}")
 
-    # --- build BOTH partition schemes ---
-    for scheme in ["iid", "non_iid"]:
+    # --- build ALL THREE partition schemes ---
+    for scheme in ["iid", "non_iid", "non_iid_equal"]:
         parts = partition(train_df, config, scheme=scheme)
         summarise(parts, target, scheme)
 

@@ -57,6 +57,7 @@ federated:
   local_epochs: 1
   partition_scheme: "iid"
   dirichlet_alpha: 1.0             # was 0.5 — raised to ensure both classes per client
+  num_seeds: 10                    # repeat experiments across N seeds (mean ± std)
 
 privacy:
   differential_privacy:

@@ -1,0 +1,56 @@
+{
+  "iid": {
+    "random_forest": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "specificity": 1.0,
+      "auc_roc": 1.0
+    },
+    "xgboost": {
+      "accuracy": 0.9,
+      "precision": 0.9375,
+      "recall": 0.9,
+      "f1": 0.9183673469387755,
+      "specificity": 0.9,
+      "auc_roc": 0.99
+    }
+  },
+  "non_iid_equal": {
+    "random_forest": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "specificity": 1.0,
+      "auc_roc": 1.0
+    },
+    "xgboost": {
+      "accuracy": 0.9375,
+      "precision": 0.9787234042553191,
+      "recall": 0.92,
+      "f1": 0.9484536082474226,
+      "specificity": 0.9666666666666667,
+      "auc_roc": 0.9946666666666667
+    }
+  },
+  "non_iid": {
+    "random_forest": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "specificity": 1.0,
+      "auc_roc": 1.0
+    },
+    "xgboost": {
+      "accuracy": 0.9625,
+      "precision": 0.9795918367346939,
+      "recall": 0.96,
+      "f1": 0.9696969696969697,
+      "specificity": 0.9666666666666667,
+      "auc_roc": 0.9973333333333333
+    }
+  }
+}
