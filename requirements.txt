@@ -25,6 +25,7 @@ scipy==1.18.0
 shap==0.52.0
 six==1.17.0
 slicer==0.0.8
+tenseal==0.3.17
 threadpoolctl==3.6.0
 tifffile==2026.6.1
 tqdm==4.68.3

@@ -1,0 +1,355 @@
+{
+  "central_baseline": {
+    "random_forest": {
+      "cv_accuracy_mean": 0.990625,
+      "cv_accuracy_std": 0.012499999999999999,
+      "test_metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "specificity": 1.0,
+        "auc_roc": 1.0
+      }
+    },
+    "xgboost": {
+      "cv_accuracy_mean": 0.984375,
+      "cv_accuracy_std": 0.01711632992203644,
+      "test_metrics": {
+        "accuracy": 0.9875,
+        "precision": 1.0,
+        "recall": 0.98,
+        "f1": 0.98989898989899,
+        "specificity": 1.0,
+        "auc_roc": 1.0
+      }
+    },
+    "logistic_regression": {
+      "cv_accuracy_mean": 0.990625,
+      "cv_accuracy_std": 0.012499999999999999,
+      "test_metrics": {
+        "accuracy": 0.9875,
+        "precision": 1.0,
+        "recall": 0.98,
+        "f1": 0.98989898989899,
+        "specificity": 1.0,
+        "auc_roc": 1.0
+      }
+    }
+  },
+  "federated_multiseed": {
+    "random_forest": {
+      "centralised": {
+        "accuracy_mean": 0.9962500000000001,
+        "accuracy_std": 0.005728219618694779,
+        "recall_mean": 1.0,
+        "recall_std": 0.0,
+        "auc_mean": 0.9998666666666665,
+        "auc_std": 0.0002666666666666595
+      },
+      "iid": {
+        "accuracy_mean": 0.9862499999999998,
+        "accuracy_std": 0.008750000000000011,
+        "recall_mean": 0.99,
+        "recall_std": 0.010000000000000009,
+        "auc_mean": 0.9993333333333334,
+        "auc_std": 0.0010327955589886527
+      },
+      "non_iid_equal": {
+        "accuracy_mean": 0.9924999999999999,
+        "accuracy_std": 0.008291561975888493,
+        "recall_mean": 0.9960000000000001,
+        "recall_std": 0.008000000000000007,
+        "auc_mean": 0.9996666666666666,
+        "auc_std": 0.000537483849886559
+      },
+      "non_iid": {
+        "accuracy_mean": 0.9925,
+        "accuracy_std": 0.010000000000000004,
+        "recall_mean": 0.998,
+        "recall_std": 0.0060000000000000045,
+        "auc_mean": 0.9994,
+        "auc_std": 0.0009637888196534033
+      }
+    },
+    "xgboost": {
+      "centralised": {
+        "accuracy_mean": 0.9925,
+        "accuracy_std": 0.008291561975888493,
+        "recall_mean": 0.994,
+        "recall_std": 0.009165151389911688,
+        "auc_mean": 0.9996,
+        "auc_std": 0.000679869268479035
+      },
+      "iid": {
+        "accuracy_mean": 0.96125,
+        "accuracy_std": 0.02465385365414503,
+        "recall_mean": 0.9620000000000001,
+        "recall_std": 0.031559467676118995,
+        "auc_mean": 0.9963333333333333,
+        "auc_std": 0.003014778414558663
+      },
+      "non_iid_equal": {
+        "accuracy_mean": 0.9662500000000002,
+        "accuracy_std": 0.020953818267800267,
+        "recall_mean": 0.9720000000000001,
+        "recall_std": 0.027129319932501055,
+        "auc_mean": 0.9963333333333333,
+        "auc_std": 0.0026541372316525643
+      },
+      "non_iid": {
+        "accuracy_mean": 0.9762500000000001,
+        "accuracy_std": 0.014197270864500707,
+        "recall_mean": 0.9880000000000001,
+        "recall_std": 0.013266499161421611,
+        "auc_mean": 0.9981333333333333,
+        "auc_std": 0.0017333333333333372
+      }
+    }
+  },
+  "federated_lr": {
+    "scheme": "iid",
+    "num_rounds": 20,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "canonical_round_accuracy": [
+      0.9375,
+      0.95,
+      0.9625,
+      0.9625,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975
+    ],
+    "canonical_round_auc": [
+      0.9986666666666667,
+      0.9986666666666667,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "multiseed_final_round": {
+      "accuracy_mean": 0.9862500000000001,
+      "accuracy_std": 0.01305038313613819,
+      "recall_mean": 0.9780000000000001,
+      "recall_std": 0.02088061301782112,
+      "auc_mean": 1.0,
+      "auc_std": 0.0
+    },
+    "centralised_lr_accuracy": 0.9875
+  },
+  "privacy_dp": {
+    "random_forest": {
+      "no_privacy": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "specificity": 1.0,
+        "auc_roc": 1.0
+      },
+      "dp": {
+        "10.0": {
+          "accuracy": 0.925,
+          "precision": 0.9782608695652174,
+          "recall": 0.9,
+          "f1": 0.9375,
+          "specificity": 0.9666666666666667,
+          "auc_roc": 0.986,
+          "privacy_cost": 0.07499999999999996
+        },
+        "5.0": {
+          "accuracy": 0.8,
+          "precision": 0.8863636363636364,
+          "recall": 0.78,
+          "f1": 0.8297872340425532,
+          "specificity": 0.8333333333333334,
+          "auc_roc": 0.8993333333333334,
+          "privacy_cost": 0.19999999999999996
+        },
+        "1.0": {
+          "accuracy": 0.4875,
+          "precision": 0.6,
+          "recall": 0.54,
+          "f1": 0.5684210526315789,
+          "specificity": 0.4,
+          "auc_roc": 0.5356666666666666,
+          "privacy_cost": 0.5125
+        },
+        "0.5": {
+          "accuracy": 0.4625,
+          "precision": 0.574468085106383,
+          "recall": 0.54,
+          "f1": 0.5567010309278351,
+          "specificity": 0.3333333333333333,
+          "auc_roc": 0.45366666666666666,
+          "privacy_cost": 0.5375
+        }
+      }
+    },
+    "xgboost": {
+      "no_privacy": {
+        "accuracy": 0.9,
+        "precision": 0.9375,
+        "recall": 0.9,
+        "f1": 0.9183673469387755,
+        "specificity": 0.9,
+        "auc_roc": 0.99
+      },
+      "dp": {
+        "10.0": {
+          "accuracy": 0.9,
+          "precision": 0.9375,
+          "recall": 0.9,
+          "f1": 0.9183673469387755,
+          "specificity": 0.9,
+          "auc_roc": 0.9673333333333334,
+          "privacy_cost": 0.0
+        },
+        "5.0": {
+          "accuracy": 0.8,
+          "precision": 0.8695652173913043,
+          "recall": 0.8,
+          "f1": 0.8333333333333334,
+          "specificity": 0.8,
+          "auc_roc": 0.8753333333333334,
+          "privacy_cost": 0.09999999999999998
+        },
+        "1.0": {
+          "accuracy": 0.4625,
+          "precision": 0.5777777777777777,
+          "recall": 0.52,
+          "f1": 0.5473684210526316,
+          "specificity": 0.36666666666666664,
+          "auc_roc": 0.5233333333333334,
+          "privacy_cost": 0.4375
+        },
+        "0.5": {
+          "accuracy": 0.45,
+          "precision": 0.5652173913043478,
+          "recall": 0.52,
+          "f1": 0.5416666666666666,
+          "specificity": 0.3333333333333333,
+          "auc_roc": 0.448,
+          "privacy_cost": 0.45
+        }
+      }
+    }
+  },
+  "privacy_he": {
+    "scheme": "iid",
+    "seed": 42,
+    "num_rounds": 20,
+    "ckks_params": {
+      "enable": false,
+      "scheme": "CKKS",
+      "poly_modulus_degree": 8192,
+      "coeff_mod_bit_sizes": [
+        60,
+        40,
+        40,
+        60
+      ],
+      "global_scale_bits": 40
+    },
+    "plaintext_final_accuracy": 0.975,
+    "he_final_accuracy": 0.975,
+    "accuracy_difference": 0.0,
+    "plaintext_round_accuracy": [
+      0.9375,
+      0.95,
+      0.9625,
+      0.9625,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975
+    ],
+    "he_round_accuracy": [
+      0.9375,
+      0.95,
+      0.9625,
+      0.9625,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975,
+      0.975
+    ],
+    "overhead": {
+      "encrypt_ms_mean": 17.061121050210204,
+      "encrypt_ms_std": 0.5503027892258993,
+      "aggregate_ms_mean": 3.4375457995338365,
+      "aggregate_ms_std": 0.3376810814337188,
+      "decrypt_ms_mean": 1.1786748975282535,
+      "decrypt_ms_std": 0.0912390769572132,
+      "plain_wall_seconds": 0.07523737501469441,
+      "he_wall_seconds": 0.5418673749954905,
+      "slowdown_factor": 7.2021036737347615,
+      "ciphertext_bytes_per_client": 1655761,
+      "plaintext_bytes_per_client": 1000,
+      "size_blowup_factor": 1655.761
+    }
+  }
+}
