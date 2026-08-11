@@ -95,23 +95,29 @@ def table_predictive_performance(central: dict, fed_multiseed: dict, fed_lr: dic
 
 
 def table_dp_privacy_utility(dp: dict) -> str:
-    """Table 4.2: DP privacy-utility trade-off (Track A)."""
+    """Table 4.2: DP privacy-utility trade-off (Track A), mean ± std
+    across the same N seeds used everywhere else (§3.9.3 convention)."""
     lines = [
         "\nTABLE 4.2 -- DIFFERENTIAL PRIVACY: PRIVACY-UTILITY TRADE-OFF (TRACK A)",
-        "=" * 78,
-        f"{'Model':<18}{'Epsilon':<12}{'Accuracy':<14}{'Privacy Cost':<16}",
-        "-" * 78,
+        "=" * 90,
+        f"{'Model':<18}{'Epsilon':<12}{'Accuracy':<22}{'Privacy Cost':<22}",
+        "-" * 90,
     ]
     for model_name in ["random_forest", "xgboost"]:
-        base = dp[model_name]["no_privacy"]["accuracy"]
-        lines.append(f"{model_name:<18}{'inf (none)':<12}{base:<14.4f}{'—':<16}")
+        base = dp[model_name]["no_privacy"]
+        lines.append(
+            f"{model_name:<18}{'inf (none)':<12}"
+            f"{base['accuracy_mean']:.4f} ± {base['accuracy_std']:.4f}   {'—':<22}"
+        )
         eps_sorted = sorted(dp[model_name]["dp"].keys(), key=float, reverse=True)
         for eps in eps_sorted:
             row = dp[model_name]["dp"][eps]
             lines.append(
-                f"{'':<18}{eps:<12}{row['accuracy']:<14.4f}{row['privacy_cost']:<+16.4f}"
+                f"{'':<18}{eps:<12}"
+                f"{row['accuracy_mean']:.4f} ± {row['accuracy_std']:.4f}   "
+                f"{row['privacy_cost_mean']:+.4f} ± {row['privacy_cost_std']:.4f}"
             )
-        lines.append("-" * 78)
+        lines.append("-" * 90)
     return "\n".join(lines)
 
 
@@ -145,13 +151,15 @@ def plot_objective5(dp: dict, he: dict, out_path: Path) -> None:
     """
     fig, axes = plt.subplots(1, 2, figsize=(13, 5))
 
-    # --- Panel A: DP privacy-utility curve ---
+    # --- Panel A: DP privacy-utility curve (mean ± std across seeds) ---
     ax = axes[0]
     for model_name in ["random_forest", "xgboost"]:
         eps_vals = sorted(float(e) for e in dp[model_name]["dp"].keys())
-        accs = [dp[model_name]["dp"][str(e)]["accuracy"] for e in eps_vals]
+        accs = np.array([dp[model_name]["dp"][str(e)]["accuracy_mean"] for e in eps_vals])
+        stds = np.array([dp[model_name]["dp"][str(e)]["accuracy_std"] for e in eps_vals])
         ax.plot(eps_vals, accs, marker="o", label=model_name)
-        ax.axhline(dp[model_name]["no_privacy"]["accuracy"], linestyle="--", alpha=0.3)
+        ax.fill_between(eps_vals, accs - stds, accs + stds, alpha=0.15)
+        ax.axhline(dp[model_name]["no_privacy"]["accuracy_mean"], linestyle="--", alpha=0.3)
     ax.set_xlabel("Privacy budget ε (smaller = stronger privacy)")
     ax.set_ylabel("Accuracy")
     ax.set_title("Track A (DP): privacy costs ACCURACY")

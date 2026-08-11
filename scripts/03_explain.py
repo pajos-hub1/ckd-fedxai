@@ -5,6 +5,7 @@ Run from the project root:
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -15,7 +16,7 @@ from sklearn.model_selection import train_test_split
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from ckd_fedxai.explain.explainer import shap_global, lime_local
+from ckd_fedxai.explain.explainer import lime_fidelity_and_stability, lime_local, shap_global
 from ckd_fedxai.utils.config import load_config
 from ckd_fedxai.utils.seed import set_seed
 
@@ -62,6 +63,26 @@ def main() -> None:
                 model, X_train, X_test, model_name, figures_dir,
                 num_samples=config["explainability"]["num_lime_samples"],
             )
+
+            print("\n  Computing LIME fidelity and stability (§3.8.2)...")
+            fs = lime_fidelity_and_stability(
+                model, X_train, X_test,
+                num_samples=config["explainability"]["num_lime_samples"],
+            )
+            print(fs.to_string(index=False))
+            print(f"  mean fidelity (R^2):        {fs['fidelity_r2'].mean():.4f}")
+            print(f"  mean stability (Jaccard):   {fs['stability_jaccard'].mean():.4f}")
+
+            metrics_dir = ROOT / config["paths"]["metrics_dir"]
+            out = metrics_dir / f"lime_fidelity_stability_{model_name}.json"
+            out.write_text(json.dumps({
+                "per_patient": fs.to_dict(orient="records"),
+                "fidelity_r2_mean": float(fs["fidelity_r2"].mean()),
+                "fidelity_r2_std": float(fs["fidelity_r2"].std()),
+                "stability_jaccard_mean": float(fs["stability_jaccard"].mean()),
+                "stability_jaccard_std": float(fs["stability_jaccard"].std()),
+            }, indent=2))
+            print(f"  ✓ Saved: {out}")
 
     print(f"\n✓ All explainability figures saved to: {figures_dir}")
 

@@ -1,0 +1,33 @@
+{
+  "per_patient": [
+    {
+      "patient": 1,
+      "fidelity_r2": 0.3352105555827274,
+      "stability_jaccard": 1.0
+    },
+    {
+      "patient": 2,
+      "fidelity_r2": 0.34464445856292736,
+      "stability_jaccard": 1.0
+    },
+    {
+      "patient": 3,
+      "fidelity_r2": 0.3495159948126254,
+      "stability_jaccard": 1.0
+    },
+    {
+      "patient": 4,
+      "fidelity_r2": 0.27617092233256035,
+      "stability_jaccard": 1.0
+    },
+    {
+      "patient": 5,
+      "fidelity_r2": 0.18894247602281133,
+      "stability_jaccard": 1.0
+    }
+  ],
+  "fidelity_r2_mean": 0.29889688146273036,
+  "fidelity_r2_std": 0.06815471162911921,
+  "stability_jaccard_mean": 1.0,
+  "stability_jaccard_std": 0.0
+}

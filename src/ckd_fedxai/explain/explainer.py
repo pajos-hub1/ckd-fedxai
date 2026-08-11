@@ -93,3 +93,67 @@ def lime_local(model, X_train: pd.DataFrame, X_explain: pd.DataFrame,
         fig.savefig(out, dpi=150, bbox_inches="tight")
         plt.close(fig)
     print(f"  Saved {n} LIME patient explanations.")
+
+
+def lime_fidelity_and_stability(model, X_train: pd.DataFrame, X_explain: pd.DataFrame,
+                                num_samples: int = 5, num_repeats: int = 5,
+                                top_k: int = 5) -> pd.DataFrame:
+    """Quantify LIME's fidelity and stability (§3.8.2), on the same patients
+    explained by lime_local().
+
+    Fidelity: the R^2 of LIME's local linear surrogate against the black-box
+    model's predictions in the perturbed neighbourhood around each patient
+    (LIME's own `exp.score`), at the canonical seed (42) used for the saved
+    patient explanations in lime_local().
+
+    Stability: LIME is repeated `num_repeats` times per patient, each with an
+    independent random seed, and the Jaccard similarity of the top-`top_k`
+    feature set (by absolute weight, for the "ckd" class) is measured between
+    every pair of repeats. A low mean Jaccard similarity means the features
+    LIME reports as most influential change from run to run for the same
+    patient -- the instability noted in Section 2.6.2 of the literature review.
+    """
+    from itertools import combinations
+
+    from lime.lime_tabular import LimeTabularExplainer
+
+    ckd_label = list(model.classes_).index(1)
+    n = min(num_samples, len(X_explain))
+    rows = []
+
+    for i in range(n):
+        row = X_explain.iloc[i].values
+
+        canonical = LimeTabularExplainer(
+            training_data=X_train.values, feature_names=list(X_train.columns),
+            class_names=["notckd", "ckd"], mode="classification",
+            discretize_continuous=True, random_state=42,
+        )
+        exp = canonical.explain_instance(row, model.predict_proba, num_features=10)
+        fidelity = float(exp.score)
+
+        top_sets = []
+        for r in range(num_repeats):
+            rep_explainer = LimeTabularExplainer(
+                training_data=X_train.values, feature_names=list(X_train.columns),
+                class_names=["notckd", "ckd"], mode="classification",
+                discretize_continuous=True, random_state=100 + r,
+            )
+            rep_exp = rep_explainer.explain_instance(
+                row, model.predict_proba, num_features=10
+            )
+            ranked = sorted(rep_exp.as_map()[ckd_label], key=lambda t: -abs(t[1]))
+            top_sets.append({idx for idx, _ in ranked[:top_k]})
+
+        pairwise_jaccard = [
+            len(a & b) / len(a | b) for a, b in combinations(top_sets, 2)
+        ]
+        stability = float(np.mean(pairwise_jaccard))
+
+        rows.append({
+            "patient": i + 1,
+            "fidelity_r2": fidelity,
+            "stability_jaccard": stability,
+        })
+
+    return pd.DataFrame(rows)
